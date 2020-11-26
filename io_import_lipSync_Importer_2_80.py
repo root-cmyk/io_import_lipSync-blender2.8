@@ -21,14 +21,14 @@
 
 bl_info = {
     "name": "LipSync Importer & Blinker",
-    "author": "Yousef Harfoush - bat3a ;) / Konstantin Dmitriev / fixed for 2.76x by Looch / 2.8 fix by iCEE HAM", 
+    "author": "Yousef Harfoush - bat3a ;) / Konstantin Dmitriev / fixed for 2.76x by Looch", 
     "version": (0, 5, 3),
-    "blender": (2, 80, 0),
+    "blender": (2, 70, 0),
     "location": "3D window > Tool Shelf",
     "description": "Plot Moho (Papagayo, Jlipsync, Yolo) file to frames and adds automatic blinking. Modified by Konstantin Dmitriev for Morevna Project to support Pose Libraries and CG Cookie Flex Rig",
     "warning": "",
     "wiki_url": "http://wiki.blender.org/index.php?title=Extensions:2.6/Py/"
-    "Scripts/Import-Export/Lipsync Importer",
+        "Scripts/Import-Export/Lipsync Importer",
     "tracker_url": "https://developer.blender.org/T24080",
     "category": "Import-Export"}
 
@@ -47,9 +47,9 @@ def blinker():
     scn = bpy.context.scene
     obj = bpy.context.object
 
-    if scn.regMENU_PG_types.enumBlinkTypes == '0':
+    if scn.regMenuTypes.enumBlinkTypes == '0':
         modifier = 0
-    elif scn.regMENU_PG_types.enumBlinkTypes == '1':
+    elif scn.regMenuTypes.enumBlinkTypes == '1':
         modifier = scn.blinkMod
 
     #creating keys with blinkNm count
@@ -71,9 +71,9 @@ def blinkerFlexRig():
     state_frame = scn.frame_current
     state_poselib = obj.pose_library
 
-    if scn.regMENU_PG_types.enumBlinkTypes == '0':
+    if scn.regMenuTypes.enumBlinkTypes == '0':
         modifier = 0
-    elif scn.regMENU_PG_types.enumBlinkTypes == '1':
+    elif scn.regMenuTypes.enumBlinkTypes == '1':
         modifier = scn.blinkMod
     
     
@@ -109,7 +109,7 @@ def blinkerFlexRig():
         #createShapekey('blink', frame)
         
         # inserting the In key only when phonem change or when blinking
-        #if lastPhoneme!=phoneme or eval(scn.regMENU_PG_types.enumModeTypes) == 1:
+        #if lastPhoneme!=phoneme or eval(scn.regMenuTypes.enumModeTypes) == 1:
         #    addFlexRigKey(offst+frame-frmIn, phoneme)
         
         addFlexRigKey(offst+frame-frmIn, 'rest')
@@ -139,13 +139,13 @@ def lipsyncerFlexRig():
     skVlu = scene.skscale    # shape key value
     
     #in case of Papagayo format
-    if scene.regMENU_PG_types.enumFileTypes == '0' :
+    if scene.regMenuTypes.enumFileTypes == '0' :
         frmIn = scene.easeIn     # ease in value
         frmOut = scene.easeOut   # ease out value
         hldIn = scene.holdGap    # holding time value
         
     #in case of Jlipsync format or Yolo
-    elif scene.regMENU_PG_types.enumFileTypes == '1' :
+    elif scene.regMenuTypes.enumFileTypes == '1' :
         frmIn = 1
         frmOut = 1
         hldIn = 0
@@ -194,7 +194,7 @@ def lipsyncerFlexRig():
         pl = obj.pose_library
         
         # inserting the In key only when phonem change or when blinking
-        #if lastPhoneme[-1]!=phoneme or eval(scene.regMENU_PG_types.enumModeTypes) == 1:
+        #if lastPhoneme[-1]!=phoneme or eval(scene.regMenuTypes.enumModeTypes) == 1:
         #    addFlexRigKey(offst+frame-frmIn, phoneme)
         
         # add rest position right before the first phoneme
@@ -264,7 +264,7 @@ def addFlexRigKey(frame=0, pose=""):
     
 
 
-# -----------code contributed by dalai felinto adds armature support modified by Looch-------------------
+# -----------code contributed by dalai felinto adds armature support modified by me-------------------
 
 bone_keys = {
 "AI":   ('location', 0),
@@ -337,19 +337,19 @@ def createBoneKeys(phoneme, bone, attribute, frame):
     skVlu = scene.skscale    # shape key value
 
     #in case of Papagayo format
-    if scene.regMENU_PG_types.enumFileTypes == '0' :
+    if scene.regMenuTypes.enumFileTypes == '0' :
         frmIn = scene.easeIn     # ease in value
         frmOut = scene.easeOut   # ease out value
         hldIn = scene.holdGap    # holding time value
 
     #in case of Jlipsync format or Yolo
-    elif scene.regMENU_PG_types.enumFileTypes == '1' :
+    elif scene.regMenuTypes.enumFileTypes == '1' :
         frmIn = 1
         frmOut = 1
         hldIn = 0
 
     # inserting the In key only when phonem change or when blinking
-    if lastPhoneme!=phoneme or eval(scene.regMENU_PG_types.enumModeTypes) == 1:
+    if lastPhoneme!=phoneme or eval(scene.regMenuTypes.enumModeTypes) == 1:
         addBoneKey(bone, attribute[0], attribute[1], 0.0, offst+frame-frmIn, "Lipsync")
 
     addBoneKey(bone, attribute[0], attribute[1], skVlu, offst+frame, "Lipsync")
@@ -395,19 +395,19 @@ def createShapekey(phoneme, frame):
     skVlu = scn.skscale    # shape key value
 
     #in case of Papagayo format
-    if scn.regMENU_PG_types.enumFileTypes == '0' :
+    if scn.regMenuTypes.enumFileTypes == '0' :
         frmIn = scn.easeIn     # ease in value
         frmOut = scn.easeOut   # ease out value
         hldIn = scn.holdGap    # holding time value
 
     #in case of Jlipsync format or Yolo
-    elif scn.regMENU_PG_types.enumFileTypes == '1' :
+    elif scn.regMenuTypes.enumFileTypes == '1' :
         frmIn = 1
         frmOut = 1
         hldIn = 0
 
     # inserting the In key only when phonem change or when blinking
-    if lastPhoneme!=phoneme or eval(scn.regMENU_PG_types.enumModeTypes) == 1:
+    if lastPhoneme!=phoneme or eval(scn.regMenuTypes.enumModeTypes) == 1:
         objSK.key_blocks[phoneme].value=0.0
         objSK.key_blocks[phoneme].keyframe_insert("value",
             -1, offst+frame-frmIn, "Lipsync")
@@ -427,7 +427,7 @@ def createShapekey(phoneme, frame):
     lastPhoneme = phoneme
 
 # lipsyncer operation start
-class BTN_OP_lipsyncer(bpy.types.Operator):
+class btn_lipsyncer(bpy.types.Operator):
     bl_idname = 'lipsync.go'
     bl_label = 'Start Processing'
     bl_description = 'Plots the voice file keys to timeline'
@@ -446,7 +446,7 @@ class BTN_OP_lipsyncer(bpy.types.Operator):
                 else: print("No shape keys")
 
             elif obj.type=="ARMATURE":
-                if scn.regMENU_PG_types.enumBoneMethodTypes == '0':
+                if scn.regMenuTypes.enumBoneMethodTypes == '0':
                     if scn.fpath!='': lipsyncerFlexRig()
                     else: print ("select a Moho file")
                 else:
@@ -460,7 +460,7 @@ class BTN_OP_lipsyncer(bpy.types.Operator):
         return {'FINISHED'}
 
 # blinker operation start
-class BTN_OP_blinker(bpy.types.Operator):
+class btn_blinker(bpy.types.Operator):
     bl_idname = 'blink.go'
     bl_label = 'Start Processing'
     bl_description = 'Add blinks at random or specifice frames'
@@ -487,7 +487,7 @@ class BTN_OP_blinker(bpy.types.Operator):
 
 
 #defining custom enumeratos
-class MENU_PG_types(bpy.types.PropertyGroup):
+class menuTypes(bpy.types.PropertyGroup):
 
     enumFileTypes = EnumProperty(items =(('0', 'Papagayo', ''),
                                          ('1', 'Jlipsync Or Yolo', '')
@@ -512,7 +512,7 @@ class MENU_PG_types(bpy.types.PropertyGroup):
                                  default = '0')
                                  
 # drawing the user interface
-class LIPSYNC_PT_bone_ui(bpy.types.Panel):
+class LipSyncBoneUI(bpy.types.Panel):
     bl_space_type = "VIEW_3D"
     bl_region_type = "UI"
     bl_label = "Phonemes"
@@ -525,7 +525,7 @@ class LIPSYNC_PT_bone_ui(bpy.types.Panel):
         bone = bpy.context.active_pose_bone
 
         #showing the current object type
-        if bone: #and if scn.regMENU_PG_types.enumModeTypes == '0':
+        if bone: #and if scn.regMenuTypes.enumModeTypes == '0':
             col.prop(bone, "location", index=0, text="AI")
             col.prop(bone, "location", index=1, text="E")
             col.prop(bone, "location", index=2, text="FV")
@@ -550,11 +550,10 @@ class LIPSYNC_PT_bone_ui(bpy.types.Panel):
             layout.label(text="No good bone is selected")
 
 # drawing the user interface
-class LIPSYNC_PT_ui(bpy.types.Panel):
+class LipSyncUI(bpy.types.Panel):
     bl_space_type = "VIEW_3D"
-    bl_region_type = "UI"
+    bl_region_type = "TOOLS"
     bl_label = "LipSync Importer & Blinker"
-    bl_category = 'Animation'
 
     newType= bpy.types.Scene
 
@@ -588,12 +587,12 @@ class LIPSYNC_PT_ui(bpy.types.Panel):
             if obj.type == "MESH":
                 split = col.split(align=True)
                 split.label(text="The active object is: ", icon="OBJECT_DATA")
-                split.label(text=obj.name, icon="EDITMODE_HLT")
+                split.label(obj.name, icon="EDITMODE_HLT")
             elif obj.type == "ARMATURE": # bone needs to be selected
                 if obj.mode == "POSE": # mode needs to be pose
                     split = col.split(align=True)
                     split.label(text="The active object is: ", icon="ARMATURE_DATA")
-                    split.label(text=obj.name, icon="EDITMODE_HLT")
+                    split.label(obj.name, icon="EDITMODE_HLT")
                 else:
                     col.label(text="You need to select Pose mode!", icon="OBJECT_DATA")
             else:
@@ -601,100 +600,91 @@ class LIPSYNC_PT_ui(bpy.types.Panel):
         else:
             layout.label(text="No object is selected", icon="OBJECT_DATA")
 
-        col.row().prop(scn.regMENU_PG_types, 'enumModeTypes')
+        col.row().prop(scn.regMenuTypes, 'enumModeTypes')
         col.separator()
 
         # the lipsyncer panel
-        if scn.regMENU_PG_types.enumModeTypes == '0':
+        if scn.regMenuTypes.enumModeTypes == '0':
             # choose the file format
-            col.row().prop(scn.regMENU_PG_types, 'enumFileTypes', text = ' ', expand = True)
+            col.row().prop(scn.regMenuTypes, 'enumFileTypes', text = ' ', expand = True)
 
             # Papagayo panel
-            if scn.regMENU_PG_types.enumFileTypes == '0':
+            if scn.regMenuTypes.enumFileTypes == '0':
                 col.prop(context.scene, "fpath")
                 split = col.split(align=True)
-                split.label(text="Key Value :")
+                split.label("Key Value :")
                 split.prop(context.scene, "skscale")
                 split = col.split(align=True)
-                split.label(text="Frame Offset :")
+                split.label("Frame Offset :")
                 split.prop(context.scene, "offset")
                 split = col.split(align=True)
-                split.prop(context.scene, "easeIn", text="Ease In")
-                split.prop(context.scene, "holdGap", text="Hold Gap")
-                split.prop(context.scene, "easeOut", text="Ease Out")
+                split.prop(context.scene, "easeIn", "Ease In")
+                split.prop(context.scene, "holdGap", "Hold Gap")
+                split.prop(context.scene, "easeOut", "Ease Out")
 
             # Jlipsync & Yolo panel
-            elif scn.regMENU_PG_types.enumFileTypes == '1':
+            elif scn.regMenuTypes.enumFileTypes == '1':
                 col.prop(context.scene, "fpath")
                 split = col.split(align=True)
-                split.label(text="Key Value :")
+                split.label("Key Value :")
                 split.prop(context.scene, "skscale")
                 split = col.split(align=True)
-                split.label(text="Frame Offset :")
+                split.label("Frame Offset :")
                 split.prop(context.scene, "offset")
                 
             if obj.type == "ARMATURE":
                 col.separator()
-                col.row().prop(scn.regMENU_PG_types, 'enumBoneMethodTypes')
-                if scn.regMENU_PG_types.enumBoneMethodTypes == '0':
-                    col.prop(context.scene, "phonemesLib", text="Pose Library")
+                col.row().prop(scn.regMenuTypes, 'enumBoneMethodTypes')
+                if scn.regMenuTypes.enumBoneMethodTypes == '0':
+                    col.prop(context.scene, "phonemesLib", "Pose Library")
                 col.separator()
                 
             col.operator('lipsync.go', text='Plot Keys to the Timeline')
         
         # the blinker panel
-        elif scn.regMENU_PG_types.enumModeTypes == '1':
+        elif scn.regMenuTypes.enumModeTypes == '1':
             # choose blink type
-            col.row().prop(scn.regMENU_PG_types, 'enumBlinkTypes', text = ' ', expand = True)
+            col.row().prop(scn.regMenuTypes, 'enumBlinkTypes', text = ' ', expand = True)
 
             # specific panel
-            if scn.regMENU_PG_types.enumBlinkTypes == '0':
+            if scn.regMenuTypes.enumBlinkTypes == '0':
                 split = col.split(align=True)
-                split.label(text="Key Value :")
+                split.label("Key Value :")
                 split.prop(context.scene, "skscale")
                 split = col.split(align=True)
-                split.label(text="Frame Offset :")
+                split.label("Frame Offset :")
                 split.prop(context.scene, "offset")
                 split = col.split(align=True)
-                split.prop(context.scene, "easeIn", text="Ease In")
-                split.prop(context.scene, "holdGap", text="Hold Gap")
-                split.prop(context.scene, "easeOut", text="Ease Out")
-                col.prop(context.scene, "blinkSp", text="Spacing")
-                col.prop(context.scene, "blinkNm", text="Times")
+                split.prop(context.scene, "easeIn", "Ease In")
+                split.prop(context.scene, "holdGap", "Hold Gap")
+                split.prop(context.scene, "easeOut", "Ease Out")
+                col.prop(context.scene, "blinkSp", "Spacing")
+                col.prop(context.scene, "blinkNm", "Times")
 
             # Random panel
-            elif scn.regMENU_PG_types.enumBlinkTypes == '1':
+            elif scn.regMenuTypes.enumBlinkTypes == '1':
                 split = col.split(align=True)
-                split.label(text="Key Value :")
+                split.label("Key Value :")
                 split.prop(context.scene, "skscale")
                 split = col.split(align=True)
-                split.label(text="Frame Start :")
+                split.label("Frame Start :")
                 split.prop(context.scene, "offset")
                 split = col.split(align=True)
-                split.prop(context.scene, "easeIn", text="Ease In")
-                split.prop(context.scene, "holdGap", text="Hold Gap")
-                split.prop(context.scene, "easeOut", text="Ease Out")
+                split.prop(context.scene, "easeIn", "Ease In")
+                split.prop(context.scene, "holdGap", "Hold Gap")
+                split.prop(context.scene, "easeOut", "Ease Out")
                 split = col.split(align=True)
-                split.prop(context.scene, "blinkSp", text="Spacing")
-                split.prop(context.scene, "blinkMod", text="Random Modifier")
-                col.prop(context.scene, "blinkNm", text="Times")
+                split.prop(context.scene, "blinkSp", "Spacing")
+                split.prop(context.scene, "blinkMod", "Random Modifier")
+                col.prop(context.scene, "blinkNm", "Times")
             
             if obj.type == "ARMATURE":
                 col.separator()
-                if scn.regMENU_PG_types.enumBoneMethodTypes == '0':
+                if scn.regMenuTypes.enumBoneMethodTypes == '0':
                     col.prop(context.scene, "eyesLib", "Pose Library")
                 col.separator()
                 
             col.operator('blink.go', text='Add Keys to the Timeline')
-			
-
-classes = (
-    BTN_OP_lipsyncer,
-    BTN_OP_blinker,
-    MENU_PG_types,
-    LIPSYNC_PT_bone_ui,
-    LIPSYNC_PT_ui
-)
 
 # clearing vars
 def clear_properties():
@@ -713,17 +703,14 @@ def clear_properties():
 
 # registering the script
 def register():
-    from bpy.utils import register_class
-    for cls in classes:
-        register_class(cls)
-    bpy.types.Scene.regMENU_PG_types = PointerProperty(type=MENU_PG_types)
-
+    bpy.utils.register_module(__name__)
+    bpy.types.Scene.regMenuTypes = PointerProperty(type = menuTypes)
 
 def unregister():
-    from bpy.utils import unregister_class
-    for cls in reversed(classes):
-        unregister_class(cls)
-    del bpy.types.Scene.regMENU_PG_types
+    bpy.utils.unregister_module(__name__)
+    del bpy.types.Scene.regMenuTypes
+
+    clear_properties()
 
 if __name__ == "__main__":
     register()
